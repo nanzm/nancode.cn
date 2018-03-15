@@ -1,43 +1,55 @@
 import React, {Component} from 'react';
 import "./index.less"
-
-import {Layout} from 'zent';
+import api from "@/api/movie";
+import {Layout, Tag, Rate} from 'zent';
 
 const {Row, Col} = Layout;
 
 
-// doubanId: "27068596",
-// rate: 9,
-// title: "Live",
-// summary: "此剧以警察局里发生的事件为中心，讲述努力维护日常重要价值及正义的警察之喜怒哀乐的故事。",
-// video: null,
-// poster: "https://img3.doubanio.com/view/photo/l_ratio_poster/public/p2515942970.jpg",
-// cover: null,
-// videoKey: null,
-// posterKey: "http://cloud.nancode.cn/UOKNPLUHc2WZsXr2NDWYC.jpg",
-// coverKey: null,
-// rawTitle: "살다",
-// movieTypes: "剧情,犯罪",
-// year: "2018",
-// created_at: "2018-03-14T08:59:07.000Z",
-// updated_at: "2018-03-14T08:59:07.000Z"
-
-
 class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            list: [],
+            total: 0,
+        };
+    }
+
+    componentDidMount() {
+        api.list().then((res) => {
+            res.data.code === 0 && this.setState({
+                list: res.data.data.rows,
+                total: res.data.data.count
+            });
+        });
+    }
+    handleClick(){
+
+    }
+
     render() {
         return (
             <div className="">
                 <Row>
-                    <Col className="movieItem" span={4}>
-                        <div className="box">
-                            <div className="img"><img src="http://cloud.nancode.cn/UOKNPLUHc2WZsXr2NDWYC.jpg" alt=""/></div>
-                            <div className="info">
-                                <h3>Live 살다</h3>
-                            </div>
-                        </div>
-                    </Col>
-
-
+                    {
+                        this.state.list.length > 0 && this.state.list.map((item) => {
+                            return <Col className="movieItem" span={4} key={item.doubanId} onClick={this.handleClick}>
+                                <div className="box mask">
+                                    <div className="img"><img src={item.posterKey} alt=""/></div>
+                                    <div className="info">
+                                        <h3>{item.title}</h3>
+                                        <Tag className="year" color="#778899" outline rounded={false}>2018</Tag>
+                                        <Tag className="movieTypes" color="#778899" rounded={false}>剧情</Tag>
+                                        <Tag className="movieTypes" color="#778899" rounded={false}>犯罪</Tag>
+                                        <div className="movieRate">
+                                            <Rate disabled allowHalf value={2} onChange={() => {
+                                            }}/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Col>
+                        })
+                    }
                 </Row>
             </div>
         );

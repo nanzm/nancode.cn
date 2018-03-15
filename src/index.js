@@ -5,7 +5,7 @@ import {createStore, applyMiddleware, compose} from 'redux';
 import {Provider} from 'react-redux';
 
 import './style/common.less';
-import 'zent/css/index.css';
+
 import {counter} from "./redux/test";
 import Routes from './router';
 
