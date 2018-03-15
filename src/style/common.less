@@ -1,3 +1,4 @@
+
 html, body {
   line-height: 1;
   font-family: PingFang SC, Microsoft YaHei, Verdana, Arial, Tahoma, sans-serif !important;
@@ -12,3 +13,36 @@ html, body {
   color: #ffde00;
   background: #e60014
 }
+
+
+/*单行文本溢出*/
+
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/*2行文本溢出*/
+
+.ellipsis2 {
+  display: -webkit-box !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+/*3行文本溢出*/
+
+.ellipsis3 {
+  display: -webkit-box !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+

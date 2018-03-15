@@ -2,17 +2,29 @@ import React, {Component} from 'react';
 import "./index.less"
 import api from "@/api/movie";
 import {Layout, Tag, Rate} from 'zent';
+import {Modal} from 'antd';
+import Chimee from 'chimee';
 
 const {Row, Col} = Layout;
 
-
 class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            list: [],
-            total: 0,
-        };
+    state = {
+        visible: false,
+        modalData: {},
+        list: [],
+        total: 0
+    }
+
+    showModal = (item) => {
+        this.setState({
+            visible: true,
+            modalData: item
+        });
+    }
+    hideModal = () => {
+        this.setState({
+            visible: false,
+        });
     }
 
     componentDidMount() {
@@ -22,9 +34,10 @@ class App extends Component {
                 total: res.data.data.count
             });
         });
-    }
-    handleClick(){
-
+        // const chimee = new Chimee('#dplaye');
+        // chimee.on('play', () => console.log('play!!'));
+        // chimee.load('http://cdn.toxicjohann.com/lostStar.mp4');
+        // chimee.play(); // play!!
     }
 
     render() {
@@ -33,7 +46,9 @@ class App extends Component {
                 <Row>
                     {
                         this.state.list.length > 0 && this.state.list.map((item) => {
-                            return <Col className="movieItem" span={4} key={item.doubanId} onClick={this.handleClick}>
+                            return <Col className="movieItem" span={4} key={item.doubanId} onClick={() => {
+                                this.showModal(item)
+                            }}>
                                 <div className="box mask">
                                     <div className="img"><img src={item.posterKey} alt=""/></div>
                                     <div className="info">
@@ -51,6 +66,16 @@ class App extends Component {
                         })
                     }
                 </Row>
+
+                <Modal
+                    title={this.state.modalData.title}
+                    visible={this.state.visible}
+                    onOk={this.hideModal}
+                    onCancel={this.hideModal}
+                    footer={null}>
+                    <div id="dplaye"></div>
+                    <p>{this.state.modalData.summary}</p>
+                </Modal>
             </div>
         );
     }
