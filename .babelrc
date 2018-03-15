@@ -4,8 +4,22 @@
   ],
   "plugins": [
     [
-      "transform-decorators-legacy",
-      "zent"
+      "transform-decorators-legacy"
+    ],
+    [
+      "zent",
+      {
+        "automaticStyleImport": true,
+        "useRawStyle": false
+      }
+    ],
+    [
+      "import",
+      {
+        "libraryName": "antd",
+        "libraryDirectory": "es",
+        "style": "css"
+      }
     ]
   ]
 }
